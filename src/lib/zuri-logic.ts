@@ -13,7 +13,13 @@ export const needsApproval = (discount: number, role: Role) => discount > MAX_DI
 /** Units missing to fulfil a requested quantity. */
 export const shortage = (p: Product, qty: number) => Math.max(0, qty - p.stock);
 
-export const stockState = (p: Product): "Rupture" | "Faible" | "OK" => (p.stock <= 0 ? "Rupture" : p.stock < p.minStock ? "Faible" : "OK");
+/** Calcul précis de l'état de stock en prenant en compte les unités réservées et le stock réel */
+export const stockState = (p: Product, reserved: number = 0): "Rupture" | "Faible" | "OK" => {
+  const netAvailable = p.stock - reserved;
+  if (p.stock <= 0 || netAvailable < 0) return "Rupture";
+  if (p.stock < p.minStock || netAvailable < p.minStock) return "Faible";
+  return "OK";
+};
 
 export const margin = (p: Product) => ((p.price - p.cost) / p.price) * 100;
 

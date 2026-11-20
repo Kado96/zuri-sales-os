@@ -1,4 +1,4 @@
-// Illustrative seed data for ZURI Sales OS with GPS & Categories
+// Illustrative seed data for ZURI Sales OS with realistic sales conversion and GPS
 export type Role = "Direction" | "Responsable Commercial" | "Commercial terrain" | "Gestionnaire de stock";
 export type ClientType = "Distributeur" | "Grossiste" | "Détaillant" | "Supermarché" | "Quincaillerie" | "Magasin ménager" | "Particulier";
 export type ClientCategory = "VIP" | "Régulier" | "Nouveau" | "À Réactiver";
@@ -70,17 +70,16 @@ export const seedProducts: Product[] = [
   ["Ghajini", "ZUR-GHA-27", "Bassine multi-usage", 27, "Bleu", 9500, 14500, 13000, 12200, 820, 300, 200, 20, 450],
   ["Pogo", "ZUR-POG-25", "Bassine multi-usage", 25, "Rouge", 8800, 13500, 12200, 11500, 640, 200, 200, 20, 380],
   ["Tusker", "ZUR-TUS-40", "Bassine multi-usage", 40, "Vert", 13500, 21000, 19000, 18000, 140, 250, 150, 10, 210],
-  ["Titanic", "ZUR-TIT-60", "Bac de stockage", 60, "Bleu", 19000, 29500, 27000, 25500, 95, 0, 80, 5, 120],
+  ["Titanic", "ZUR-TIT-60", "Bac de stockage", 60, "Bleu", 19000, 29500, 27000, 25500, 180, 200, 80, 5, 120],
   ["Karishma", "ZUR-KAR-20", "Bassine décorée", 20, "Rose", 7200, 11500, 10300, 9800, 410, 100, 150, 20, 260],
   ["Bucket 5L", "ZUR-BUC-05", "Seau", 5, "Jaune", 2100, 3500, 3100, 2900, 1500, 500, 400, 50, 290],
-  ["Bucket 10L", "ZUR-BUC-10", "Seau", 10, "Bleu", 3400, 5500, 4900, 4600, 60, 400, 300, 50, 230],
+  ["Bucket 10L", "ZUR-BUC-10", "Seau", 10, "Bleu", 3400, 5500, 4900, 4600, 260, 400, 300, 50, 230],
   ["Bucket 20L", "ZUR-BUC-20", "Seau", 20, "Noir", 5600, 8800, 8000, 7500, 320, 0, 200, 30, 150],
-  ["Bassine 777", "ZUR-777-30", "Bassine ronde", 30, "Bleu", 8000, 12500, 11200, 10600, 0, 300, 150, 20, 175],
+  ["Bassine 777", "ZUR-777-30", "Bassine ronde", 30, "Bleu", 8000, 12500, 11200, 10600, 120, 300, 150, 20, 175],
   ["Bassine 17", "ZUR-B17-17", "Bassine ronde", 17, "Vert", 4900, 7800, 7000, 6600, 520, 0, 200, 30, 95],
   ["Basin Round", "ZUR-BAS-12", "Bassine ronde", 12, "Blanc", 3900, 6200, 5600, 5300, 260, 0, 150, 30, 40],
 ].map((r, i) => ({ id: `p${i + 1}`, name: r[0] as string, sku: r[1] as string, category: r[2] as string, capacity: r[3] as number, color: r[4] as string, cost: r[5] as number, price: r[6] as number, wholesale: r[7] as number, distributor: r[8] as number, stock: r[9] as number, inProduction: r[10] as number, minStock: r[11] as number, moq: r[12] as number, sold30: r[13] as number }));
 
-// Clients with realistic GPS coordinates across Burundi
 export const seedClients: Client[] = [
   { id: "c1", name: "Ets Kabondo Distribution", contact: "Pascal Kabondo", phone: "+257 79 100 200", city: "Bujumbura", district: "Rohero", type: "Distributeur", rep: REPS[0], revenue: 18_400_000, lastVisit: d(0), nextFollowUp: d(3), loyalty: "Fidèle", category: "VIP", lat: -3.3855, lng: 29.3644, notes: "Magasin principal avenue de l'Uprona" },
   { id: "c2", name: "Grossiste Ngagara", contact: "Fatuma Hassan", phone: "+257 79 113 207", city: "Bujumbura", district: "Ngagara", type: "Grossiste", rep: REPS[1], revenue: 11_200_000, lastVisit: d(-4), nextFollowUp: d(-1), loyalty: "Fidèle", category: "VIP", lat: -3.3582, lng: 29.3741, notes: "Proche Rond-point des Nations Unies" },
@@ -94,15 +93,16 @@ export const seedClients: Client[] = [
   { id: "c10", name: "Super Kiosque Kinindo", contact: "Sandrine Ishimwe", phone: "+257 79 221 263", city: "Bujumbura", district: "Kinindo", type: "Supermarché", rep: REPS[1], revenue: 5_200_000, lastVisit: d(-1), nextFollowUp: d(10), loyalty: "Régulier", category: "Régulier", lat: -3.4112, lng: 29.3551, notes: "Avenue du Large, Kinindo" },
 ];
 
+// Leads incluant des affaires gagnées démontrant un taux de conversion réel
 export const seedLeads: Lead[] = [
-  ["Grossiste Bwiza Nouveau", "Bujumbura", "Visite terrain", "Grossiste", 6_000_000, "Négociation", 86],
-  ["Magasin Ménager Gitega Sud", "Gitega", "Recommandation", "Magasin ménager", 2_500_000, "Intéressé", 72],
-  ["Distributeur Ngozi Nord", "Ngozi", "Salon commercial", "Distributeur", 12_000_000, "RDV planifié", 80],
-  ["Supermarché Rumonge Plage", "Rumonge", "Appel entrant", "Supermarché", 3_800_000, "Devis envoyé", 77],
-  ["Revendeur Kigali Nyabugogo", "Kigali", "WhatsApp", "Grossiste", 9_000_000, "Contacté", 64],
-  ["Quincaillerie Kirundo", "Kirundo", "Visite terrain", "Quincaillerie", 1_200_000, "Nouveau", 41],
-  ["Boutique Cibitoke", "Bujumbura", "Facebook", "Détaillant", 600_000, "Perdu", 22],
-].map((r, i) => ({ id: `l${i + 1}`, name: r[0] as string, city: r[1] as string, source: r[2] as string, type: r[3] as ClientType, potential: r[4] as number, stage: r[5] as Stage, score: r[6] as number, rep: REPS[i % 4]!, lostReason: r[5] === "Perdu" ? "Prix jugé trop élevé" : undefined }));
+  { id: "l1", name: "Grossiste Bwiza Nouveau", city: "Bujumbura", source: "Visite terrain", type: "Grossiste", potential: 6_000_000, stage: "Négociation", score: 86, rep: REPS[1] },
+  { id: "l2", name: "Magasin Ménager Gitega Sud", city: "Gitega", source: "Recommandation", type: "Magasin ménager", potential: 2_500_000, stage: "Gagné", score: 92, rep: REPS[3] },
+  { id: "l3", name: "Distributeur Ngozi Nord", city: "Ngozi", source: "Salon commercial", type: "Distributeur", potential: 12_000_000, stage: "RDV planifié", score: 80, rep: REPS[0] },
+  { id: "l4", name: "Supermarché Rumonge Plage", city: "Rumonge", source: "Appel entrant", type: "Supermarché", potential: 3_800_000, stage: "Devis envoyé", score: 77, rep: REPS[1] },
+  { id: "l5", name: "Quincaillerie Moderne Mutanga", city: "Bujumbura", source: "Visite terrain", type: "Quincaillerie", potential: 4_200_000, stage: "Gagné", score: 88, rep: REPS[2] },
+  { id: "l6", name: "Quincaillerie Kirundo", city: "Kirundo", source: "Visite terrain", type: "Quincaillerie", potential: 1_200_000, stage: "Contacté", score: 55, rep: REPS[3] },
+  { id: "l7", name: "Boutique Cibitoke", city: "Bujumbura", source: "Facebook", type: "Détaillant", potential: 600_000, stage: "Perdu", score: 22, rep: REPS[0], lostReason: "Prix jugé trop élevé" },
+];
 
 const statuses: OrderStatus[] = ["Payée", "Livrée", "Facturée", "Confirmée", "En préparation", "Prête à livrer", "En attente d'approbation", "Devis", "Payée", "Payée"];
 export const seedOrders: Order[] = Array.from({ length: 34 }, (_, i) => {
