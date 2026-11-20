@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: ".output/public",
   bundledWebRuntime: false,
   server: {
-    androidScheme: "https",
+    url: "https://zuri-sales-os.vercel.app",
     cleartext: true,
   },
   plugins: {
