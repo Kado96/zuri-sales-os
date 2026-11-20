@@ -153,20 +153,22 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen bg-background text-foreground">
       {/* Sidebar Desktop */}
-      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col justify-between border-r border-sidebar-border bg-sidebar p-4 text-sidebar-foreground md:flex">
-        <div>
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col justify-between overflow-y-auto border-r border-sidebar-border bg-sidebar p-4 text-sidebar-foreground md:flex">
+        <div className="space-y-3">
           <Brand />
-          <div className="mt-3 space-y-2">
+          <div className="space-y-2">
             <LangSwitch />
             <TimeFilterControl />
           </div>
           <NavList />
         </div>
-        <RoleSwitch />
+        <div className="mt-4 pt-3 border-t border-sidebar-border">
+          <RoleSwitch />
+        </div>
       </aside>
 
       {/* Main Content Area */}
-      <div className="flex flex-1 flex-col pb-16 md:pb-0">
+      <div className="flex min-w-0 flex-1 flex-col overflow-x-hidden pb-16 md:pb-0">
         <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b border-border bg-background/80 px-4 backdrop-blur md:hidden">
           <Brand />
           <div className="flex items-center gap-2">
@@ -174,15 +176,17 @@ export function AppShell({ children }: { children: ReactNode }) {
               <SheetTrigger aria-label="Ouvrir le menu" className="p-2">
                 <Menu className="h-5 w-5" />
               </SheetTrigger>
-              <SheetContent side="left" className="w-72 bg-sidebar p-4 text-sidebar-foreground">
+              <SheetContent side="left" className="w-72 overflow-y-auto bg-sidebar p-4 text-sidebar-foreground">
                 <SheetTitle className="sr-only">Menu</SheetTitle>
-                <Brand />
-                <div className="mt-3 space-y-2">
-                  <LangSwitch />
-                  <TimeFilterControl />
+                <div className="space-y-3">
+                  <Brand />
+                  <div className="space-y-2">
+                    <LangSwitch />
+                    <TimeFilterControl />
+                  </div>
+                  <NavList />
                 </div>
-                <NavList />
-                <div className="mt-6">
+                <div className="mt-6 pt-3 border-t border-sidebar-border">
                   <RoleSwitch />
                 </div>
               </SheetContent>
