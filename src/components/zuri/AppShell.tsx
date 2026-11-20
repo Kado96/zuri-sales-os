@@ -23,6 +23,7 @@ import type { TranslationKey } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 import { TimeFilterControl } from "@/components/zuri/TimeFilterControl";
+import { ZuriExplainerBot } from "@/components/zuri/ZuriExplainerBot";
 
 const NAV_ITEMS: { to: string; key: TranslationKey; icon: typeof LayoutDashboard }[] = [
   { to: "/", key: "dashboard", icon: LayoutDashboard },
@@ -189,6 +190,9 @@ export function AppShell({ children }: { children: ReactNode }) {
 
         <main className="flex-1 p-4 md:p-6 lg:p-8">{children}</main>
       </div>
+
+      {/* Chat Bot Intelligent Guide & Analyste */}
+      <ZuriExplainerBot />
 
       {/* Barre de navigation Mobile */}
       <nav className="fixed bottom-0 left-0 right-0 z-30 flex items-center justify-around border-t border-border bg-background/95 py-2 backdrop-blur md:hidden">

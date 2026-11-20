@@ -25,7 +25,19 @@ export type Client = {
 };
 
 export type Stage = "Nouveau" | "Contacté" | "RDV planifié" | "Intéressé" | "Devis envoyé" | "Négociation" | "Gagné" | "Perdu";
-export type Lead = { id: string; name: string; city: string; source: string; type: ClientType; potential: number; stage: Stage; rep: string; score: number; lostReason?: string };
+export type Lead = {
+  id: string;
+  name: string;
+  city: string;
+  source: string;
+  type: ClientType;
+  potential: number;
+  stage: Stage;
+  rep: string;
+  score: number;
+  description?: string;
+  lostReason?: string;
+};
 export type OrderStatus = "Brouillon" | "Devis" | "En attente d'approbation" | "Confirmée" | "En préparation" | "Prête à livrer" | "Livrée" | "Facturée" | "Payée" | "Annulée";
 export type OrderLine = { productId: string; qty: number; unit: number };
 export type Order = { id: string; clientId: string; date: string; lines: OrderLine[]; discount: number; status: OrderStatus; rep: string; paid: number };
