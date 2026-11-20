@@ -45,9 +45,11 @@ const MOBILE = ["/", "/clients", "/ventes", "/terrain", "/assistant"];
 function Brand() {
   return (
     <div className="flex items-center gap-2.5 px-2">
-      <div className="grid h-9 w-9 place-items-center rounded-lg bg-sidebar-primary font-display text-lg font-extrabold text-sidebar-primary-foreground">
-        Z
-      </div>
+      <img
+        src="/icon.png"
+        alt="ZURI Sales OS Logo"
+        className="h-9 w-9 rounded-lg object-contain shadow-sm"
+      />
       <div className="leading-tight">
         <p className="font-display text-base font-extrabold tracking-wide">
           ZURI <span className="text-sidebar-primary">Sales OS</span>
