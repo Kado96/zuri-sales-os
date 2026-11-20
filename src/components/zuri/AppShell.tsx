@@ -22,6 +22,8 @@ import type { Role } from "@/lib/zuri-data";
 import type { TranslationKey } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
+import { TimeFilterControl } from "@/components/zuri/TimeFilterControl";
+
 const NAV_ITEMS: { to: string; key: TranslationKey; icon: typeof LayoutDashboard }[] = [
   { to: "/", key: "dashboard", icon: LayoutDashboard },
   { to: "/clients", key: "crm", icon: Users },
@@ -151,8 +153,9 @@ export function AppShell({ children }: { children: ReactNode }) {
       <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col justify-between border-r border-sidebar-border bg-sidebar p-4 text-sidebar-foreground md:flex">
         <div>
           <Brand />
-          <div className="mt-4">
+          <div className="mt-3 space-y-2">
             <LangSwitch />
+            <TimeFilterControl />
           </div>
           <NavList />
         </div>
@@ -171,8 +174,9 @@ export function AppShell({ children }: { children: ReactNode }) {
               <SheetContent side="left" className="w-72 bg-sidebar p-4 text-sidebar-foreground">
                 <SheetTitle className="sr-only">Menu</SheetTitle>
                 <Brand />
-                <div className="mt-4">
+                <div className="mt-3 space-y-2">
                   <LangSwitch />
+                  <TimeFilterControl />
                 </div>
                 <NavList />
                 <div className="mt-6">

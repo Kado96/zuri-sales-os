@@ -48,8 +48,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Dashboard() {
-  const { orders, products, clients, users, t, lang } = useZuri();
-  const rev = orders.filter(isRevenueStatus);
+  const { orders, products, clients, users, isFiltered, t, lang } = useZuri();
+  const rev = orders.filter((o) => isRevenueStatus(o) && isFiltered(o.date));
   const sum = (days: number) =>
     rev.filter((o) => daysSince(o.date) < days).reduce((s, o) => s + orderTotal(o), 0);
   const month = sum(30),

@@ -58,6 +58,7 @@ function Terrain() {
     deleteVisit,
     addVisit,
     navigateToClient,
+    isFiltered,
     t,
     lang,
   } = useZuri();
@@ -145,7 +146,9 @@ function Terrain() {
     setVisitToDelete(null);
   };
 
-  const sorted = [...visits].sort((a, b) => a.date.localeCompare(b.date));
+  const sorted = [...visits]
+    .filter((v) => isFiltered(v.date, v.checkIn))
+    .sort((a, b) => a.date.localeCompare(b.date));
 
   return (
     <div className="space-y-6">

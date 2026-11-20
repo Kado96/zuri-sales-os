@@ -79,6 +79,7 @@ function Clients() {
     updateClient,
     deleteClient,
     navigateToClient,
+    isFiltered,
     t,
     lang,
   } = useZuri();
@@ -114,10 +115,11 @@ function Clients() {
     const matchQ = (c.name + c.city + c.district + c.contact)
       .toLowerCase()
       .includes(q.toLowerCase());
-    return matchType && matchCat && matchQ;
+    const matchTime = isFiltered(c.lastVisit);
+    return matchType && matchCat && matchQ && matchTime;
   });
 
-  const history = sel ? orders.filter((o) => o.clientId === sel.id) : [];
+  const history = sel ? orders.filter((o) => o.clientId === sel.id && isFiltered(o.date)) : [];
   const score = (c: Client) =>
     Math.max(5, Math.min(100, Math.round(c.revenue / 200_000 - daysSince(c.lastVisit) + 40)));
 

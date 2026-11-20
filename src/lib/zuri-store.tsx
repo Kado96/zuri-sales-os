@@ -1,10 +1,16 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import * as D from "./zuri-data";
 import { translations, type Lang, type TranslationKey } from "./i18n";
+import {
+  type TimeFilterState,
+  DEFAULT_TIME_FILTER,
+  isWithinTimeFilter,
+} from "./time-filter";
 
 type State = {
   lang: Lang;
   role: D.Role;
+  timeFilter: TimeFilterState;
   products: D.Product[];
   clients: D.Client[];
   leads: D.Lead[];
@@ -19,6 +25,7 @@ type State = {
 const initial: State = {
   lang: "fr",
   role: "Responsable Commercial",
+  timeFilter: DEFAULT_TIME_FILTER,
   products: D.seedProducts,
   clients: D.seedClients,
   leads: D.seedLeads,
@@ -47,6 +54,9 @@ type Ctx = State & {
   deleteVisit: (id: string) => void;
   // Navigation helper
   navigateToClient: (lat: number, lng: number, name?: string) => void;
+  // Time filter helper
+  setTimeFilter: (tf: TimeFilterState | ((prev: TimeFilterState) => TimeFilterState)) => void;
+  isFiltered: (dateStr?: string, timeStr?: string) => boolean;
 };
 
 const C = createContext<Ctx | null>(null);
@@ -130,6 +140,14 @@ export function ZuriProvider({ children }: { children: ReactNode }) {
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
+  const setTimeFilter: Ctx["setTimeFilter"] = (tf) => {
+    set("timeFilter", tf);
+  };
+
+  const isFiltered: Ctx["isFiltered"] = (dateStr, timeStr) => {
+    return isWithinTimeFilter(dateStr, timeStr, s.timeFilter);
+  };
+
   return (
     <C.Provider
       value={{
@@ -145,6 +163,8 @@ export function ZuriProvider({ children }: { children: ReactNode }) {
         updateVisit,
         deleteVisit,
         navigateToClient,
+        setTimeFilter,
+        isFiltered,
       }}
     >
       {children}

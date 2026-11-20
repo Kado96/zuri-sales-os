@@ -18,7 +18,7 @@ export const Route = createFileRoute("/ventes")({
 const tone = (s: OrderStatus) => (s === "Payée" ? "green" : s === "Annulée" ? "red" : s === "En attente d'approbation" ? "amber" : ["Devis", "Brouillon"].includes(s) ? "gray" : "blue");
 
 function Ventes() {
-  const { orders, clients, products, set, role, users } = useZuri();
+  const { orders, clients, products, set, role, users, isFiltered } = useZuri();
   const [open, setOpen] = useState(false); const [filter, setFilter] = useState("Toutes");
   const [clientId, setClientId] = useState(clients[0]?.id ?? ""); const [tier, setTier] = useState<"price" | "wholesale" | "distributor">("wholesale");
   const [lines, setLines] = useState<OrderLine[]>([]); const [discount, setDiscount] = useState(0);
@@ -44,7 +44,7 @@ function Ventes() {
     w.document.write(`<html><head><title>${o.id}</title><style>body{font-family:sans-serif;padding:40px}table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #ddd;padding:8px;text-align:left}h1{margin:0}</style></head><body><h1>ZURI — Zahara Industries SPRL</h1><p>Bujumbura, Burundi</p><h2>${o.status === "Devis" ? "Devis / Proforma" : "Bon de commande"} ${o.id}</h2><p>Client : <b>${cName(o.clientId)}</b><br/>Date : ${o.date}</p><table><tr><th>Produit</th><th>Qté</th><th>P.U. (BIF)</th><th>Total</th></tr>${o.lines.map((l) => `<tr><td>${pr(l.productId).name} ${pr(l.productId).capacity}L</td><td>${l.qty}</td><td>${fmtBIF(l.unit)}</td><td>${fmtBIF(l.qty * l.unit)}</td></tr>`).join("")}</table><p>Sous-total : ${fmtBIF(orderSubtotal(o))}<br/>Remise : ${o.discount} %<br/><b>Total : ${fmtBIF(orderTotal(o))}</b></p><script>print()</script></body></html>`);
     w.document.close();
   };
-  const list = orders.filter((o) => filter === "Toutes" || o.status === filter);
+  const list = orders.filter((o) => (filter === "Toutes" || o.status === filter) && isFiltered(o.date));
   const draft = { lines, discount };
   return (
     <div>
