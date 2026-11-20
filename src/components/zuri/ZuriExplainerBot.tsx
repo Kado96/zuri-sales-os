@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useZuri } from "@/lib/zuri-store";
 import { ZURI_APP_KNOWLEDGE_BASE, type AppGuideSection } from "@/lib/app-knowledge";
+import { computeRealTimeLearning, generateStrategicBrief } from "@/lib/live-learning";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -28,10 +29,13 @@ export function ZuriExplainerBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [input, setInput] = useState("");
-  const { lang } = useZuri();
+  const { lang, products, clients, orders, leads, visits } = useZuri();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const isEn = lang === "en";
+
+  // Moteur d'apprentissage automatique en temps réel branché sur les données de l'application
+  const currentLearning = computeRealTimeLearning(products, clients, orders, leads, visits);
 
   const getWelcomeMessage = (): Message => ({
     id: "m0",
@@ -88,15 +92,20 @@ export function ZuriExplainerBot() {
       q.includes("ai") ||
       q.includes("machine learning") ||
       q.includes("modèle") ||
-      q.includes("model")
+      q.includes("model") ||
+      q.includes("diagnostic") ||
+      q.includes("analyse") ||
+      q.includes("analysis")
     ) {
+      const liveBrief = generateStrategicBrief(currentLearning, isEn ? "en" : "fr");
       return isEn
         ? {
-            reply: `🧠 **Data Learning & Algorithmic Architecture in ZURI Sales OS:**\n\n` +
-              `1. **Predictive Lead Scoring (0-100):** Calculates win probability using historical conversion velocity, acquisition channel credibility (field visit > incoming inquiry > social media), and expected order volume.\n\n` +
-              `2. **Linear Revenue Forecasting & Seasonality:** Projects monthly closing totals using 30-day run rates weighted against provincial market days across Burundi.\n\n` +
-              `3. **Inventory Replenishment & Days of Cover (DOC):** Dynamically computes remaining stock runway: \`Available Stock / 30-Day Daily Velocity\`. Triggers factory mold alerts when coverage falls below 15 days.\n\n` +
-              `4. **Spatial K-Means Route Clustering:** Optimizes sales rep field paths across Bujumbura and provinces, cutting transit time by up to 25%.`,
+            reply: `${liveBrief}\n\n` +
+              `🧠 **Core Learning Algorithms Implemented:**\n` +
+              `1. **Predictive Lead Scoring (0-100):** Evaluates acquisition channel credibility and order size.\n` +
+              `2. **Linear Run-Rate Sales Regression:** Projects monthly quota attainment with market seasonality.\n` +
+              `3. **Inventory Days of Cover (DOC):** Anticipates factory shortages dynamically.\n` +
+              `4. **Spatial Route Clustering:** Groups client GPS pins into optimal daily itineraries.`,
             sources: ["Prospecting & Pipeline", "Stocks & Inventory", "ZURI AI Assistant"],
             suggestions: [
               "How to edit a lead in the pipeline?",
@@ -105,11 +114,12 @@ export function ZuriExplainerBot() {
             ],
           }
         : {
-            reply: `🧠 **Architecture Algorithmique & Apprentissage des Données ZURI Sales OS :**\n\n` +
-              `1. **Scoring Prédictif de Conversion des Leads (0-100) :** Calcule la probabilité qu'un prospect devienne client en combinant son potentiel mensuel, le canal de provenance (visite terrain = poids élevé) et la vélocité d'avancement dans les colonnes Kanban.\n\n` +
-              `2. **Prévision de Vente Mensuelle (Modèle Linéaire & Saisonnalité) :** Projette le CA de clôture mensuel à partir du rythme d'encaissement réel des 30 derniers jours, pondéré par le jour du mois actuel.\n\n` +
-              `3. **Algorithme de Réassort & Rupture (Days of Cover - DOC) :** Évalue le nombre de jours d'autonomie restant pour chaque produit : \`Stock Disponible / Vente Moyenne Journalière\` avec alerte de fabrication automatique si couverture < 15 jours.\n\n` +
-              `4. **Clustering Géographique K-Means :** Regroupe les points de vente géolocalisés par proximité pour optimiser les tournées des commerciaux et réduire les coûts de déplacement.`,
+            reply: `${liveBrief}\n\n` +
+              `🧠 **Algorithmes d'Apprentissage Automatique Implémentés :**\n` +
+              `1. **Scoring Prédictif de Conversion des Leads (0-100) :** Calcule la probabilité de signature.\n` +
+              `2. **Régression Linéaire & Prévision des Ventes :** Projette l'atteinte de l'objectif mensuel.\n` +
+              `3. **Jours de Couverture des Stocks (DOC) :** Anticipe les ruptures usine de manière proactive.\n` +
+              `4. **Clustering Spatial de Tournées :** Regroupe les points GPS pour minimiser les kilomètres.`,
             sources: ["Prospection & Pipeline", "Stocks & Disponibilités", "ZURI AI Assistant"],
             suggestions: [
               "Comment modifier un prospect dans le pipeline ?",
